@@ -30,6 +30,7 @@ object Build extends Build {
       offline := true,
       fork := true,
       resolvers ++= Seq(
+        "Local Maven Repository" at "file:///"+Path.userHome.absolutePath+"/.m2/repository",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
         "Sonatype releases" at "http://oss.sonatype.org/content/repositories/releases",
         "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",

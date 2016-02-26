@@ -4,11 +4,10 @@ package yangbajing.utils.s.regex
   * Created by Yang Jing (yangbajing@gmail.com) on 2016-02-13.
   */
 object RegexUtils {
-
-  val regexDigit = """\d+""".r
+  val regexDigit = """[\d,]+""".r
 
   def parseDigit(s: CharSequence): Option[Int] =
-    regexDigit.findFirstIn(s).map(_.toInt)
+    regexDigit.findFirstIn(s).map(_.replaceAll(",", "").toInt)
 
   def parseDigit(s: CharSequence, deft: => Int): Int =
     parseDigit(s).getOrElse(deft)

@@ -4,7 +4,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 import com.typesafe.scalalogging.StrictLogging
-import yangbajing.utils.s.exception.SInternalException
+import yangbajing.utils.s.exception.SInternalErrorException
 
 /**
   * Created by Yang Jing (yangbajing@gmail.com) on 2016-02-07.
@@ -19,7 +19,7 @@ class SecurityService extends StrictLogging {
       case e: Exception =>
         logger.error("3des encrypt fail for clearText: {}", clearText)
         logger.error("encrypt exception", e)
-        throw new SInternalException("加密失败")
+        throw new SInternalErrorException("加密失败")
     }
   }
 
@@ -31,7 +31,7 @@ class SecurityService extends StrictLogging {
       case e: Exception => {
         logger.error("3des decrypt fail for encryptedText: {}", encryptedText)
         logger.error("decrypt exception", e)
-        throw new SInternalException("解密失败")
+        throw new SInternalErrorException("解密失败")
       }
     }
   }
