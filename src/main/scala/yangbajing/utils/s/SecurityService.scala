@@ -3,7 +3,7 @@ package yangbajing.utils.s
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-import com.typesafe.scalalogging.StrictLogging
+import com.typesafe.scalalogging.slf4j.StrictLogging
 import yangbajing.utils.s.exception.SInternalErrorException
 
 /**
@@ -26,13 +26,11 @@ class SecurityService extends StrictLogging {
   def decrypt(encryptedText: String): String = {
     try {
       des3.decrypt(encryptedText)
-    }
-    catch {
-      case e: Exception => {
+    } catch {
+      case e: Exception =>
         logger.error("3des decrypt fail for encryptedText: {}", encryptedText)
         logger.error("decrypt exception", e)
         throw new SInternalErrorException("解密失败")
-      }
     }
   }
 

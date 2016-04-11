@@ -1,12 +1,11 @@
 package yangbajing.utils.s
 
-import java.util.Base64
-
 import org.bouncycastle.crypto.PBEParametersGenerator
 import org.bouncycastle.crypto.digests.SHA512Digest
 import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator
 import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.crypto.prng.DigestRandomGenerator
+import org.bouncycastle.util.encoders.Base64
 
 object PasswordUtil {
   private val GENERATOR: DigestRandomGenerator = new DigestRandomGenerator(new SHA512Digest)
@@ -40,11 +39,11 @@ object PasswordUtil {
   }
 
   private def encode(input: Array[Byte]): String = {
-    Base64.getEncoder.encodeToString(input)
+    Base64.toBase64String(input)
   }
 
   private def decode(input: String): Array[Byte] = {
-    Base64.getDecoder.decode(input.getBytes("UTF-8"))
+    Base64.decode(input)
   }
 
   private def extractSalt(input: String): String = {

@@ -1,4 +1,4 @@
-package yangbajing.utils.s.sql
+package yangbajing.utils.s.persist
 
 import java.sql.{Connection, SQLException}
 

@@ -3,7 +3,7 @@ package yangbajing.utils.s.actors
 import java.util.concurrent.atomic.AtomicInteger
 
 import akka.actor.Actor
-import com.typesafe.scalalogging.StrictLogging
+import com.typesafe.scalalogging.slf4j.StrictLogging
 
 /**
   * Metric Actor

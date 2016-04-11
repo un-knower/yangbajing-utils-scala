@@ -14,7 +14,7 @@ import org.bouncycastle.util.encoders.Hex
   */
 
 class TripleDesUtils {
-  val key = ConfigFactory.load().getString("play.crypto.secret")
+  val key = ConfigFactory.load().getString("yangbajing.crypto.secret")
   private val TRIPLE_DES_TRANSFORMATION = "DESede/ECB/PKCS7Padding"
   private val ALGORITHM = "DESede"
   private val BOUNCY_CASTLE_PROVIDER = "BC"
