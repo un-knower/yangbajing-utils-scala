@@ -116,4 +116,16 @@ object SqlHelper {
     new SqlHelper(ds)
   }
 
+  def fromH2(url: String, user: String, password: String): SqlHelper = {
+    val ds = {
+      val props = new Properties()
+      props.setProperty("dataSourceClassName", "org.h2.jdbcx.JdbcDataSource")
+      props.setProperty("dataSource.url", url)
+      props.setProperty("dataSource.user", user)
+      props.setProperty("dataSource.password", password)
+      new HikariDataSource(new HikariConfig(props))
+    }
+    new SqlHelper(ds)
+  }
+
 }

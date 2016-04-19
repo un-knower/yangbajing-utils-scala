@@ -29,7 +29,7 @@ object Build extends Build {
       ),
       offline := true,
       fork := true,
-      crossScalaVersions := Seq("2.10.6", "2.11.8"),
+      crossScalaVersions := Seq("2.11.8", "2.10.6"),
       resolvers ++= Seq(
         "Local Maven Repository" at "file:///" + Path.userHome.absolutePath + "/.m2/repository",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
@@ -44,6 +44,10 @@ object Build extends Build {
         _okhttpLoggingInterceptor % "provided",
         _okhttp % "provided",
         _hikariCP % "provided",
+        _h2 % "provided",
+        _postgresql % "provided",
+        _mysql % "provided",
+        _commonsEmail % "provided",
         _bouncycastle,
         _logback,
         _typesafeConfig,
@@ -59,7 +63,7 @@ object Build extends Build {
   val _akkaActor = "com.typesafe.akka" %% "akka-actor" % verAkka
   val _akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % verAkka
 
-  val _json4sJackson = "org.json4s" %% "json4s-jackson" % "3.3.0"
+  val _json4sJackson = "org.json4s" %% "json4s-jackson" % "3.2.11"
   val _jodaTime = "joda-time" % "joda-time" % "2.9.3"
 
   val _bouncycastle = "org.bouncycastle" % "bcprov-jdk15on" % "1.52"
@@ -67,8 +71,13 @@ object Build extends Build {
   val _okhttp = "com.squareup.okhttp3" % "okhttp" % "3.2.0"
   val _okhttpLoggingInterceptor = "com.squareup.okhttp3" % "logging-interceptor" % "3.2.0"
   val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.5"
-//  val _commonsEmail = "org.apache.commons" % "commons-email" % "1.4"
+  val _commonsEmail = "org.apache.commons" % "commons-email" % "1.4"
 //  val _guava = "com.google.guava" % "guava" % "19.0"
+
+  val _h2 = "com.h2database" % "h2" % "1.4.191"
+  val _postgresql = "org.postgresql" % "postgresql" % "9.4.1208.jre7"
+  val _mysql = "mysql" % "mysql-connector-java" % "5.1.38"
+
 
 }
 
