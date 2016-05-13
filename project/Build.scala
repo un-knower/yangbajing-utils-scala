@@ -29,7 +29,6 @@ object Build extends Build {
       ),
       offline := true,
       fork := true,
-      crossScalaVersions := Seq("2.11.8", "2.10.6"),
       resolvers ++= Seq(
         "Local Maven Repository" at "file:///" + Path.userHome.absolutePath + "/.m2/repository",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
@@ -57,22 +56,22 @@ object Build extends Build {
   val _scalaXml = "org.scala-lang.modules" %% "scala-xml" % "1.0.5"
   val _scalatest = "org.scalatest" %% "scalatest" % "2.2.6" % "test"
   val _typesafeConfig = "com.typesafe" % "config" % "1.3.0"
-  val _scalaLogging = ("com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2").exclude("org.scala-lang", "scala-library").exclude("org.scala-lang", "scala-reflect")
+  val _scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
 
-  val verAkka = "2.3.15"
+  val verAkka = "2.4.4"
   val _akkaActor = "com.typesafe.akka" %% "akka-actor" % verAkka
   val _akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % verAkka
 
-  val _json4sJackson = "org.json4s" %% "json4s-jackson" % "3.2.11"
+  val _json4sJackson = "org.json4s" %% "json4s-jackson" % "3.3.0"
   val _jodaTime = "joda-time" % "joda-time" % "2.9.3"
 
-  val _bouncycastle = "org.bouncycastle" % "bcprov-jdk15on" % "1.52"
+  val _bouncycastle = "org.bouncycastle" % "bcprov-jdk15on" % "1.54"
   val _logback = "ch.qos.logback" % "logback-classic" % "1.1.3"
   val _okhttp = "com.squareup.okhttp3" % "okhttp" % "3.2.0"
   val _okhttpLoggingInterceptor = "com.squareup.okhttp3" % "logging-interceptor" % "3.2.0"
   val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.5"
   val _commonsEmail = "org.apache.commons" % "commons-email" % "1.4"
-//  val _guava = "com.google.guava" % "guava" % "19.0"
+  val _guava = "com.google.guava" % "guava" % "19.0"
 
   val _h2 = "com.h2database" % "h2" % "1.4.191"
   val _postgresql = "org.postgresql" % "postgresql" % "9.4.1208.jre7"

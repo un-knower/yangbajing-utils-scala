@@ -1,10 +1,9 @@
 package yangbajing.utils.s.time
 
 import java.sql.{Date => SQLDate, Timestamp => SQLTimestamp}
+import java.time._
+import java.time.format.DateTimeFormatter
 import java.util.Date
-
-import org.joda.time.{Instant, LocalDate, LocalDateTime, LocalTime}
-import org.joda.time.format.DateTimeFormat
 
 import scala.util.Try
 
@@ -14,14 +13,15 @@ import scala.util.Try
   */
 object TimeUtils extends Serializable {
 
-  //  val ZONE_OFFSET = ZoneOffset.ofHours(8)
-  val formatterDateTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
-  val formatterMonth = DateTimeFormat.forPattern("yyyy-MM")
-  val formatterDate = DateTimeFormat.forPattern("yyyy-MM-dd")
-  val formatterDateHours = DateTimeFormat.forPattern("yyyy-MM-dd HH")
-  val formatterDateMinutes = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm")
-  val formatterMinutes = DateTimeFormat.forPattern("HH:mm")
-  val formatterTime = DateTimeFormat.forPattern("HH:mm:ss")
+  val ZONE_OFFSET = ZoneOffset.ofHours(8)
+
+  val formatterDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+  val formatterMonth = DateTimeFormatter.ofPattern("yyyy-MM")
+  val formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+  val formatterDateHours = DateTimeFormatter.ofPattern("yyyy-MM-dd HH")
+  val formatterDateMinutes = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+  val formatterMinutes = DateTimeFormatter.ofPattern("HH:mm")
+  val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss")
 
   def now() = LocalDateTime.now()
 
@@ -41,7 +41,7 @@ object TimeUtils extends Serializable {
       if (year < 0 || year > 9999)
         throw new RuntimeException(s"$date is invalid iso date format ($year)")
 
-      new LocalDate(year, month, day)
+      LocalDate.of(year, month, day)
     }
 
   def parseTime(time: String): LocalTime =
@@ -63,13 +63,13 @@ object TimeUtils extends Serializable {
             throw new RuntimeException(s"$time is invalid iso time format")
         }
 
-      new LocalTime(hour, minute, second, nano)
+      LocalTime.of(hour, minute, second, nano)
     }
 
   def parseDateTime(date: String, time: String): LocalDateTime = {
     val d = parseDate(date)
     val t = parseTime(time)
-    new LocalDateTime(d.getYear, d.getMonthOfYear, d.getDayOfMonth, t.getHourOfDay, t.getMinuteOfHour, t.getSecondOfMinute, t.getMillisOfSecond)
+    LocalDateTime.of(d, t)
   }
 
   def parseDateTime(datetime: String): LocalDateTime =
@@ -83,37 +83,43 @@ object TimeUtils extends Serializable {
     }
 
   def parseDateTime(instant: Instant): LocalDateTime = {
-    instant.toDateTime.toLocalDateTime
+    LocalDateTime.ofInstant(instant, ZONE_OFFSET)
   }
 
   def toLocalDateTime(date: Date): LocalDateTime = {
-    new LocalDateTime(date.getTime)
+    parseDateTime(date.toInstant)
+  }
+
+  def toLocalDateTime(epochMilli: Long): LocalDateTime = {
+    LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZoneOffset.UTC)
   }
 
   def toDate(ldt: LocalDateTime): Date = {
-    ldt.toDate
+    new Date(toEpochMilli(ldt))
   }
 
-  def toEpochMilli(dt: LocalDateTime) = {
-    dt.toDate.getTime
+  def toEpochMilli(dt: LocalDateTime): Long = {
+    dt.toInstant(ZoneOffset.UTC).toEpochMilli
   }
 
-  def toSqlTimestamp(dt: LocalDateTime) = new SQLTimestamp(toEpochMilli(dt))
+  def currentTimeSeconds() = System.currentTimeMillis() / 1000
 
-  def toSqlDate(date: LocalDate) = new SQLDate(toEpochMilli(date.toDateTimeAtStartOfDay.toLocalDateTime))
+  def toSqlTimestamp(dt: LocalDateTime): SQLTimestamp = new SQLTimestamp(toEpochMilli(dt))
+
+  def toSqlDate(date: LocalDate): SQLDate = new SQLDate(toEpochMilli(date.atStartOfDay()))
 
   /**
     * @return 一天的开始：
     */
   def nowBegin(): LocalDateTime = {
-    LocalDate.now().toLocalDateTime(new LocalTime(0, 0, 0))
+    LocalDate.now().atStartOfDay()
   }
 
   /**
     * @return 一天的结尾：
     */
   def nowEnd(): LocalDateTime = {
-    LocalDate.now().toLocalDateTime(new LocalTime(23, 59, 59))
+    nowBegin().plusDays(1).minusSeconds(1)
   }
 
 }

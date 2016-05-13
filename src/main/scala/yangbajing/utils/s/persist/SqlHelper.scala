@@ -29,10 +29,10 @@ class SqlHelper(ds: HikariDataSource) extends AutoCloseable {
               rs.getLong(label)
             case Types.DATE =>
               val d = rs.getDate(label)
-              if (d == null) "" else TimeUtils.formatterDate.print(new LocalDate(d)) //d.toLocalDate.format(TimeUtils.formatterDate)
+              if (d == null) "" else d.toLocalDate.format(TimeUtils.formatterDate)
             case Types.TIMESTAMP =>
               val dt = rs.getTimestamp(label)
-              if (dt == null) "" else TimeUtils.formatterDateTime.print(new LocalDateTime(dt)) //dt.toLocalDateTime.format(TimeUtils.formatterDateTime)
+              if (dt == null) "" else dt.toLocalDateTime.format(TimeUtils.formatterDateTime)
             case Types.DECIMAL | Types.NUMERIC =>
               rs.getDouble(label)
             case _ =>

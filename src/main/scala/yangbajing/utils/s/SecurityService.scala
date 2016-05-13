@@ -3,7 +3,7 @@ package yangbajing.utils.s
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 import yangbajing.utils.s.exception.SInternalErrorException
 
 /**
