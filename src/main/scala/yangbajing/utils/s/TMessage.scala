@@ -1,6 +1,6 @@
 package yangbajing.utils.s
 
 trait TMessage {
-   def code: Int
-   def msg: String
- }
+  def errCode: Int
+  def errMsg: String
+}

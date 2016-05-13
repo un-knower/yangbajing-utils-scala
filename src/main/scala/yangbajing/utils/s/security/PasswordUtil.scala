@@ -1,4 +1,4 @@
-package yangbajing.utils.s
+package yangbajing.utils.s.security
 
 import org.bouncycastle.crypto.PBEParametersGenerator
 import org.bouncycastle.crypto.digests.SHA512Digest

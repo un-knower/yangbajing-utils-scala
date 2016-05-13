@@ -1,6 +1,5 @@
-package yangbajing.utils.s
+package yangbajing.utils.s.security
 
-import java.nio.charset.StandardCharsets
 import java.security.{Key, MessageDigest, Security}
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
@@ -8,6 +7,7 @@ import javax.crypto.spec.SecretKeySpec
 import com.typesafe.config.ConfigFactory
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.util.encoders.Hex
+import yangbajing.utils.s.Consts
 
 /**
   * Created by Yang Jing (yangbajing@gmail.com) on 2016-02-07.
@@ -18,7 +18,6 @@ class TripleDesUtils {
   private val TRIPLE_DES_TRANSFORMATION = "DESede/ECB/PKCS7Padding"
   private val ALGORITHM = "DESede"
   private val BOUNCY_CASTLE_PROVIDER = "BC"
-  private val UNICODE_FORMAT = StandardCharsets.UTF_8.name()
   val PASSWORD_HASH_ALGORITHM = "SHA"
 
   Security.addProvider(new BouncyCastleProvider())
@@ -36,7 +35,7 @@ class TripleDesUtils {
   }
 
   private def getByte(string: String): Array[Byte] = {
-    string.getBytes(UNICODE_FORMAT)
+    string.getBytes(Consts.UTF8)
   }
 
   private def getString(byteText: Array[Byte]): String = {
@@ -45,7 +44,7 @@ class TripleDesUtils {
 
   private def buildKey(password: Array[Char]): Key = {
     val digester: MessageDigest = MessageDigest.getInstance(PASSWORD_HASH_ALGORITHM)
-    digester.update(String.valueOf(password).getBytes(UNICODE_FORMAT))
+    digester.update(String.valueOf(password).getBytes(Consts.UTF8))
     val keys: Array[Byte] = digester.digest
     val keyDes: Array[Byte] = java.util.Arrays.copyOf(keys, 24)
     new SecretKeySpec(keyDes, ALGORITHM)
@@ -61,7 +60,7 @@ class TripleDesUtils {
   }
 
   def decrypt(cipherText: String, key: String): String = {
-    val bys = cipherText.getBytes(UNICODE_FORMAT)
+    val bys = cipherText.getBytes(Consts.UTF8)
     val decryptedByte: Array[Byte] = decode(bys, key)
     getString(decryptedByte)
   }
@@ -72,7 +71,7 @@ class TripleDesUtils {
 
   def generateSHA(password: String): String = {
     val digester: MessageDigest = MessageDigest.getInstance(PASSWORD_HASH_ALGORITHM)
-    digester.update(String.valueOf(password.toCharArray).getBytes(UNICODE_FORMAT))
+    digester.update(String.valueOf(password.toCharArray).getBytes(Consts.UTF8))
     val keys: Array[Byte] = digester.digest
     Hex.toHexString(keys)
   }

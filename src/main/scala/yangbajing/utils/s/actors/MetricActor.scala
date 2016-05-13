@@ -3,13 +3,13 @@ package yangbajing.utils.s.actors
 import java.util.concurrent.atomic.AtomicInteger
 
 import akka.actor.Actor
-import com.typesafe.scalalogging.LazyLogging
+import com.typesafe.scalalogging.StrictLogging
 
 /**
   * Metric Actor
   * Created by yangjing on 15-11-4.
   */
-trait MetricActor extends Actor with LazyLogging {
+trait MetricActor extends Actor with StrictLogging {
   final override def preStart(): Unit = {
     logger.debug(s"${self.path} preStart")
     MetricActor.incrementActorSize()

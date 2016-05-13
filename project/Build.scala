@@ -24,6 +24,8 @@ object Build extends Build {
       ),
       javacOptions ++= Seq(
         "-encoding", "utf8",
+        "-source", "1.8",
+        "-target", "1.8",
         "-Xlint:unchecked",
         "-Xlint:deprecation"
       ),
@@ -47,6 +49,7 @@ object Build extends Build {
         _postgresql % "provided",
         _mysql % "provided",
         _commonsEmail % "provided",
+        _guava,
         _bouncycastle,
         _logback,
         _typesafeConfig,

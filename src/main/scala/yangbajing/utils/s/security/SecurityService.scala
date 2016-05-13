@@ -1,4 +1,4 @@
-package yangbajing.utils.s
+package yangbajing.utils.s.security
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -17,7 +17,7 @@ class SecurityService extends StrictLogging {
       des3.encrypt(clearText)
     } catch {
       case e: Exception =>
-        logger.error("3des encrypt fail for clearText: {}", clearText)
+        logger.error(s"3des encrypt fail for clearText: $clearText")
         logger.error("encrypt exception", e)
         throw new SInternalErrorException("加密失败")
     }
